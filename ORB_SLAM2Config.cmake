@@ -1,0 +1,6 @@
+# ORB_SLAM2 Config
+set(ORB_SLAM2_INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/include" "${CMAKE_CURRENT_LIST_DIR}")
+set(ORB_SLAM2_LIBS "${CMAKE_CURRENT_LIST_DIR}/lib/libORB_SLAM2.so")
+
+# Provide standard variables
+set(ORB_SLAM2_FOUND TRUE)

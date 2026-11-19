@@ -27,9 +27,7 @@ If you get error ```nvcc: command not found ```, check [this page](https://devta
 
 Use the provided shell script
 
-```
 nanoBuildInstallOpenCV.sh
-```
 
 This is derived from the shell script from Qengineering which can be found here
 
@@ -37,24 +35,25 @@ https://github.com/Qengineering/Install-OpenCV-Jetson-Nano/blob/main/OpenCV-4-6-
 
 with several additional components (e.g., gstreamer support). It determines which Jetson platform you have, pulls in the needed dependencies, builds, and finally installs opencv 4.6.0.
 
-### Install dependencies for ORB-SLAM2
+```
+
+### Install dependancies for ORB-SLAM2
 
 #### Pangolin
-Download and install instructions can be found at: https://github.com/stevenlovegrove/Pangolin. Basically
-```
+Dowload and install instructions can be found at: https://github.com/stevenlovegrove/Pangolin. Basically
+
 git clone --depth 1 --branch v0.8 https://github.com/stevenlovegrove/Pangolin
-```
+
 to grab v0.8.
 
-In order to get the ORB SLAM2 running on our Jetson Nano in a headless configuration
-using noMachine, display_headless.cpp needs to be tweaked slightly to use EGL. 
-PangolinDiff.txt provides the diff comparison
+In order to get the ORB SLAM2 running on our Jetson Nano in a headless configuration, using noMachine, display_headless.cpp needs to be tweaked slightly to use EGL. The diff file is provided in this repo
 
 #### BLAS and LAPACK
 ```
 sudo apt-get install libblas-dev  
 sudo apt-get install liblapack-dev  
 ```
+
 #### Eigen3
 Download and install instructions can be found at: http://eigen.tuxfamily.org. This ORB SLAM2 build requires at least 3.1.0.
 We use 3.4.1
@@ -62,17 +61,19 @@ We use 3.4.1
 # Building ORB_SLAM2_CUDA_CV4_PYTHON
 Clone the repo and execute the build script for normal ORB-SLAM2:
 ```
-git clone https://github.com/Zynet-ai/ORB_SLAM2_CUDA_CV4_PYTHON  
-cd ORB_SLAM2_CUDA_CV4_PYTHON  
-chmod +x build.sh  
-./build.sh  
+git clone https://github.com/Zynet-ai/ORB_SLAM2_CUDA_CV4_PYTHON
+cd ORB_SLAM2_CUDA_CV4_PYTHON
+chmod +x build.sh
+./build.sh
 ```
 If you have problem with the build, sometimes it helps to remove previous build folders:
 ```
+# in ORB_SLAM2_CUDA_CV4_PYTHON folder
 sudo rm -rf build  
 sudo rm -rf Thirdparty/DBoW2/build  
-sudo rm -rf Thirdparty/g2o/build  
-./build.sh  
+sudo rm -rf Thirdparty/g2o/build
+./build.sh
+
 ```
 When the build is completed, you can try the examples as in the ORB-SLAM2 repo's instructions.
 
