@@ -1,3 +1,0 @@
-/home/steve/Desktop/ORB_SLAM2_CUDA/Thirdparty/DBoW2/build/CMakeFiles/rebuild_cache.dir
-/home/steve/Desktop/ORB_SLAM2_CUDA/Thirdparty/DBoW2/build/CMakeFiles/DBoW2.dir
-/home/steve/Desktop/ORB_SLAM2_CUDA/Thirdparty/DBoW2/build/CMakeFiles/edit_cache.dir
