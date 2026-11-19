@@ -1,5 +1,5 @@
 # ORB_SLAM2_CUDA_CV4_PYTHON
-The code in this repository build a shared object library (libORB_SLAM2.so) along with python interfaces to that library (pyslam.cpython-36m-aarch64-linux-gnu.so) for use on a Jetson Nano.
+The code in this repository builds a shared object library (libORB_SLAM2.so) along with python interfaces to that library (pyslam.cpython-36m-aarch64-linux-gnu.so) for use on a Jetson Nano.
 
 It is derived from Thien Nguyen's ORB_SLAM2_CUDA (https://github.com/thien94/ORB_SLAM2_CUDA) which is a minimally modified
 version of Yunchih Chen's ORB-SLAM2 with GPU enhancements (https://github.com/yunchih/ORB-SLAM2-GPU2016-final).
