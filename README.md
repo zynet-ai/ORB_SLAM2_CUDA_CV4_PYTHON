@@ -51,11 +51,9 @@ using noMachine, display_headless.cpp needs to be tweaked slightly to use EGL.
 PangolinDiff.txt provides the diff comparison
 
 #### BLAS and LAPACK
-```
+
 sudo apt-get install libblas-dev  
 sudo apt-get install liblapack-dev  
-
-```
 
 #### Eigen3
 Download and install instructions can be found at: http://eigen.tuxfamily.org. This ORB SLAM2 build requires at least 3.1.0.
