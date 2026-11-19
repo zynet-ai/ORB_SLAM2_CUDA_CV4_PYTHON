@@ -15,6 +15,8 @@ The primary modifications here are:
 
 While the Nguyen/Chen codebase supports ROS (with ROS components carried along in this repository), we have not (yet) attempted to build or install ROS support. Our primary focus has been running this code under python/pygame on our 'bot, which is remotely accessed using NoMachine. We use pygame to provide joystick inputs as a means for training our 'bot using Learning By Example techniques.
 
+<img width="1286" height="512" alt="botslam" src="https://github.com/user-attachments/assets/88e2a71b-7b2a-4dd3-9340-16f2d3a49ffe" />
+
 # Installation on Jetson Nano
 
 Check to get the CUDA compiler version:
