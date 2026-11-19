@@ -1,7 +1,9 @@
 # ORB_SLAM2_CUDA_CV4_PYTHON
-This is derived from Thien Nguyen's ORB_SLAM2_CUDA (https://github.com/thien94/ORB_SLAM2_CUDA) which is a minimally modified
+The code in this repository build a shared object library (libORB_SLAM2.so) along with python interfaces to that library (pyslam.cpython-36m-aarch64-linux-gnu.so) for use on a Jetson Nano.
+
+It is derived from Thien Nguyen's ORB_SLAM2_CUDA (https://github.com/thien94/ORB_SLAM2_CUDA) which is a minimally modified
 version of Yunchih Chen's ORB-SLAM2 with GPU enhancements (https://github.com/yunchih/ORB-SLAM2-GPU2016-final).
-Chen's version is ultimately derived from Raul Mur-Artal's [ORB-SLAM2](https://github.com/raulmur/ORB_SLAM2).
+Chen's version is ultimately derived from Raul Mur-Artal's ORB-SLAM2 (https://github.com/raulmur/ORB_SLAM2).
 
 The primary modifications here are:
 - Updating the code base to use opencv 4.6 with both CUDA and gstreamer support
@@ -25,7 +27,7 @@ nvcc --version
 ```
 If you get error ```nvcc: command not found ```, check [this page](https://devtalk.nvidia.com/default/topic/995277/cuda-8-0-toolkit-install-nvcc-not-found-ubuntu-16-04/) to solve it first before moving on.
 
-### Build OpenCV with CUDA and gstreamer support for Tegra
+### Build OpenCV 4.6 with CUDA and gstreamer support for Tegra
 
 Use the provided shell script
 ```
@@ -40,14 +42,14 @@ with several additional components (e.g., gstreamer support). It determines whic
 ### Install dependancies for ORB-SLAM2
 
 #### Pangolin
-Dowload and install instructions can be found at: https://github.com/stevenlovegrove/Pangolin. Basically
+Download and install instructions for Pangolin can be found at: https://github.com/stevenlovegrove/Pangolin. Basically
 
 ```
 git clone --depth 1 --branch v0.8 https://github.com/stevenlovegrove/Pangolin
 ```
 to grab v0.8.
 
-In order to get the ORB SLAM2 running on our Jetson Nano in a headless configuration with remote access using noMachine, display_headless.cpp needs to be tweaked slightly to use EGL. The diff file is provided in this repo
+In order to get the ORB SLAM2 running on our Jetson Nano where we use a headless configuration with remote access via noMachine, the Pangolin source file *display_headless.cpp* needs to be tweaked slightly to use EGL. The diff file is provided in this repo
 
 #### BLAS and LAPACK
 ```
