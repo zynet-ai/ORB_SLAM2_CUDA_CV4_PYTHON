@@ -37,21 +37,24 @@ with several additional components (e.g., gstreamer support). It determines whic
 
 ```
 
-### Install dependancies for ORB-SLAM2
+### Install dependencies for ORB-SLAM2
 
 #### Pangolin
-Dowload and install instructions can be found at: https://github.com/stevenlovegrove/Pangolin. Basically
+Download and install instructions can be found at: https://github.com/stevenlovegrove/Pangolin. Basically
 
 git clone --depth 1 --branch v0.8 https://github.com/stevenlovegrove/Pangolin
 
 to grab v0.8.
 
-In order to get the ORB SLAM2 running on our Jetson Nano in a headless configuration, using noMachine, display_headless.cpp needs to be tweaked slightly to use EGL. The diff file is provided in this repo
+In order to get the ORB SLAM2 running on our Jetson Nano in a headless configuration
+using noMachine, display_headless.cpp needs to be tweaked slightly to use EGL. 
+PangolinDiff.txt provides the diff comparison
 
 #### BLAS and LAPACK
 ```
 sudo apt-get install libblas-dev
 sudo apt-get install liblapack-dev
+
 ```
 
 #### Eigen3
