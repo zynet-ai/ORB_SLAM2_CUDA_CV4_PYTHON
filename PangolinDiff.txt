@@ -1,0 +1,35 @@
+diff --git a/components/pango_windowing/src/display_headless.cpp b/components/pango_windowing/src/display_headless.cpp
+index 1aa0c8ca..4f74a068 100644
+--- a/components/pango_windowing/src/display_headless.cpp
++++ b/components/pango_windowing/src/display_headless.cpp
+@@ -1,6 +1,7 @@
+ #include <pangolin/windowing/window.h>
+ #include <pangolin/factory/factory_registry.h>
+ #include <EGL/egl.h>
++#include <EGL/eglext.h>
+ 
+ namespace pangolin {
+ 
+@@ -61,7 +62,21 @@ struct HeadlessWindow : public WindowInterface {
+ };
+ 
+ EGLDisplayHL::EGLDisplayHL(const int width, const int height) {
+-    egl_display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
++
++    PFNEGLQUERYDEVICESEXTPROC eglQueryDevicesEXT =
++      (PFNEGLQUERYDEVICESEXTPROC)eglGetProcAddress("eglQueryDevicesEXT");
++    PFNEGLGETPLATFORMDISPLAYEXTPROC eglGetPlatformDisplayEXT =
++      (PFNEGLGETPLATFORMDISPLAYEXTPROC)eglGetProcAddress("eglGetPlatformDisplayEXT");
++    EGLDeviceEXT egl_dev;
++    EGLint num_devs = 0;
++    if (eglQueryDevicesEXT && eglGetPlatformDisplayEXT && eglQueryDevicesEXT(1, &egl_dev, &num_devs) && num_devs > 0) {
++      egl_display = eglGetPlatformDisplayEXT(EGL_PLATFORM_DEVICE_EXT, egl_dev, nullptr);
++    } else {
++      egl_display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
++    }
++
++    // Following removed for above patch
++    // egl_display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+     if(!egl_display) {
+         std::cerr << "Failed to open EGL display" << std::endl;
+     }
