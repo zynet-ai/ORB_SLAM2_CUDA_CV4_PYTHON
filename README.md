@@ -45,7 +45,7 @@ git clone --depth 1 --branch v0.8 https://github.com/stevenlovegrove/Pangolin
 ```
 to grab v0.8.
 
-In order to get the ORB SLAM2 running on our Jetson Nano in a headless configuration, using noMachine, display_headless.cpp needs to be tweaked slightly to use EGL. The diff file is provided in this repo
+In order to get the ORB SLAM2 running on our Jetson Nano in a headless configuration with remote access using noMachine, display_headless.cpp needs to be tweaked slightly to use EGL. The diff file is provided in this repo
 
 #### BLAS and LAPACK
 ```
