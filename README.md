@@ -74,7 +74,6 @@ sudo rm -rf build
 sudo rm -rf Thirdparty/DBoW2/build  
 sudo rm -rf Thirdparty/g2o/build
 ./build.sh
-
 ```
 When the build is completed, you can try the examples as in the ORB-SLAM2 repo's instructions.
 
