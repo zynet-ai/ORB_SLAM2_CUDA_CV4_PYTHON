@@ -52,8 +52,8 @@ PangolinDiff.txt provides the diff comparison
 
 #### BLAS and LAPACK
 ```
-sudo apt-get install libblas-dev
-sudo apt-get install liblapack-dev
+sudo apt-get install libblas-dev  
+sudo apt-get install liblapack-dev  
 
 ```
 
@@ -64,18 +64,17 @@ We use 3.4.1
 # Building ORB_SLAM2_CUDA_CV4_PYTHON
 Clone the repo and execute the build script for normal ORB-SLAM2:
 ```
-git clone https://github.com/Zynet-ai/ORB_SLAM2_CUDA_CV4_PYTHON
-cd ORB_SLAM2_CUDA_CV4_PYTHON
-chmod +x build.sh
-./build.sh
+git clone https://github.com/Zynet-ai/ORB_SLAM2_CUDA_CV4_PYTHON  
+cd ORB_SLAM2_CUDA_CV4_PYTHON  
+chmod +x build.sh  
+./build.sh  
 ```
-Done. If you have problem with the build, sometimes it helps to remove previous build folders:
+If you have problem with the build, sometimes it helps to remove previous build folders:
 ```
-# in ORB_SLAM2_CUDA_CV4_PYTHON folder
-sudo rm -rf build
-sudo rm -rf Thirdparty/DBoW2/build
-sudo rm -rf Thirdparty/g2o/build
-./build.sh
+sudo rm -rf build  
+sudo rm -rf Thirdparty/DBoW2/build  
+sudo rm -rf Thirdparty/g2o/build  
+./build.sh  
 
 ```
 When the build is completed, you can try the examples as in the ORB-SLAM2 repo's instructions.
