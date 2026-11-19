@@ -58,13 +58,15 @@ Download and install instructions can be found at: http://eigen.tuxfamily.org. T
 We use 3.4.1
 
 # Building ORB_SLAM2_CUDA_CV4_PYTHON
-Clone the repo and execute the build script for normal ORB-SLAM2:
+Clone this repo and execute the build script:
 ```
 git clone https://github.com/Zynet-ai/ORB_SLAM2_CUDA_CV4_PYTHON
 cd ORB_SLAM2_CUDA_CV4_PYTHON
 chmod +x build.sh
 ./build.sh
 ```
+This builds the third party components DBoW2 and g2o, uncompresses the vocabulary file, then builds the ORB SLAM2 library, utilities, and components.
+
 If you have problem with the build, sometimes it helps to remove previous build folders:
 ```
 # in ORB_SLAM2_CUDA_CV4_PYTHON folder
