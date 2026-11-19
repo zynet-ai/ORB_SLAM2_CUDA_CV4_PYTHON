@@ -35,8 +35,6 @@ https://github.com/Qengineering/Install-OpenCV-Jetson-Nano/blob/main/OpenCV-4-6-
 
 with several additional components (e.g., gstreamer support). It determines which Jetson platform you have, pulls in the needed dependencies, builds, and finally installs opencv 4.6.0.
 
-```
-
 ### Install dependancies for ORB-SLAM2
 
 #### Pangolin
