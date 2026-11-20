@@ -1,0 +1,142 @@
+import os
+import pygame
+import sys
+import time
+import cv2
+import ctypes
+import numpy as np
+import pyslam
+import sys
+import simpleMap
+
+# Start of main app
+
+# Initialize pygame
+pygame.init()
+
+height = 480
+width  = 640
+
+screen = pygame.display.set_mode((width*2, height))
+canvas = pygame.Surface((width*2, height))
+
+# Define rectangles for the subareas of the display window
+rect_left  = pygame.Rect(0,     0, width,   height)
+rect_right = pygame.Rect(width, 0, width*2, height)
+
+pygame.display.set_caption("Zynet Bot SLAM Tracking")
+
+# Initialze orb-slam2
+vocab_path    = "Vocabulary/ORBvoc.bin"
+settings_path = "ZynetBot.yaml"
+
+usePangolin = True
+slam = pyslam.pyslam(vocab_path, settings_path,0, usePangolin)
+
+if usePangolin:
+    slam.set_hide_pangolin_display(True)
+    slam.set_map_size(width,height)
+
+clock   = pygame.time.Clock()
+running = True
+
+laststamp = 0
+count     = 0
+accum     = 0.0
+
+start = time.time()
+
+framedir = "slamtest_seq/image_0"
+
+frame_count = 0
+fps         = 5.0
+time_step   = 1.0 / fps  # 0.2 seconds
+
+try:
+    
+    for image_name in sorted(os.listdir(framedir)):
+        image_path = os.path.join(framedir, image_name)
+        frame      = cv2.imread(image_path)
+
+        rows, cols, channels = frame.shape
+        cv_type = cv2.CV_8UC3 if channels == 3 else cv2.CV_8UC1
+
+        # C++ directly hands over a valid NumPy matrix object
+        now          = time.time()
+        #timestamp   = now - start
+        timestamp    = frame_count * time_step
+        frame_count += 1
+        
+        tracked_img = slam.track_frame(frame.ctypes.data, rows, cols,
+                                       cv_type, timestamp)
+
+        # Keep track of the frame rate
+        now = time.time()
+        if laststamp > 0:
+            delta = now - laststamp
+            accum = accum + delta
+            count = count + 1
+
+        laststamp = now
+            
+        if tracked_img is not None and tracked_img.size > 0:
+            frame_rotated = cv2.rotate(tracked_img,
+                                       cv2.ROTATE_90_COUNTERCLOCKWISE)
+        else:
+            # Fallback to standard frame if SLAM tracking fails or drops out
+            frame_rotated = cv2.rotate(frame,
+                                       cv2.ROTATE_90_COUNTERCLOCKWISE)
+            
+        frame_flipped = cv2.flip(frame_rotated, 0)
+        surface = pygame.surfarray.make_surface(frame_flipped)
+        screen.blit(surface, rect_left)
+        pygame.display.flip()
+
+        # Create the projected scatter plot of the points
+        if usePangolin:
+            map_img = slam.get_rendered_map()
+        else:
+            # Get the current pose from the most recent frame
+            pose = slam.get_current_pose()
+
+            # Get the current set of mapping points
+            map_points = slam.get_map_points()
+
+            # Get the set of current and past keyframes
+            kf_points = slam.get_keyframe_points()
+            
+            # Draw the map
+            map_img = simpleMap.drawmap(height,width,pose,map_points,kf_points)
+
+        # Display the map image on the right side of the split screen
+        frame_rotated = cv2.rotate(map_img,
+                                   cv2.ROTATE_90_COUNTERCLOCKWISE)
+        frame_flipped = cv2.flip(frame_rotated, 0)
+        surface = pygame.surfarray.make_surface(frame_flipped)
+        screen.blit(surface, rect_right)
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:  # Press Esc to quit
+                    running = False
+
+        if running is not True:
+            break
+        
+        # Limit the loop rate (approx. 20 updates per second)
+        # time.sleep(incr_duration)
+        # clock.tick(int(1000.0*incr_duration))
+                
+except KeyboardInterrupt:
+    print("\nExiting...")
+finally:
+    if (accum > 0):
+        print("Average frame rate:",float(count) / accum);
+    print("\nExiting...")
+#   save_trajectory(slam.get_trajectory_points(), 'trajectory.txt')
+    slam.shutdown()
+    pygame.quit()
+    sys.exit()
