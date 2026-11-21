@@ -10,11 +10,11 @@ The primary modifications here are:
 - Adding Python interfaces to the C++ ORB SLAM2 library (via pybind11)
 - Fixups to the CMakeLists.txt to work with virtual environments (archiconda3)
 - Adding hooks to access Pangolin rendered frames without using Pangolin displays. This allows, for example, displaying the two separately rendered frames using a single pygame surface
+- Getting everything compiled and running on a Jetson Nano
 - Adding Vocabulary format conversion apps to convert from text to binary format and from binary to text format. Using a binary format loads *much, much* faster
 - Fixing the Thirdparty DBoW2 code to read the correct number of records from the vocabulary file in both binary and text formats
 - Providing the Vocabulary file in binary format rather than text format
-- Adding an example Python script along with a short test image sequence to exercise the Python interfaces. A simple map rendering Python module is also included as an alternative to using Pangolin. Choice of rendering methods is controlled within the example code.
-- Getting everything compiled and running on a Jetson Nano
+- Adding an example Python script along with a short test image sequence to exercise the Python interfaces. A simple map rendering Python module is also included as an alternative to using Pangolin. Choice of rendering methods is controlled within the example code. An image of running the Python example code with the test image sequence is shown below.
 
 While the Nguyen/Chen codebase supports ROS (with ROS components carried along in this repository), we have not (yet) attempted to build or install ROS support. Our primary focus has been running this code under python/pygame on our 'bot, which is remotely accessed using NoMachine. We use pygame to provide joystick inputs as a means for training our 'bot using Learning By Example techniques.
 
