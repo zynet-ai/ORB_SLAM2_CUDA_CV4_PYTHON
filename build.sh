@@ -43,6 +43,6 @@ cd ..
 echo "Uncompressing test image sequence ..."
 
 cd Examples/PySLAM
-tar -xfz slam_testseq.tgz
+tar -xf slam_testseq.tgz
 
 cd ../..
