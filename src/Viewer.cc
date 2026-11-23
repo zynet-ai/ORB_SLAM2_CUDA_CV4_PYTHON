@@ -42,13 +42,13 @@ namespace ORB_SLAM2
   Viewer::Viewer(System* pSystem, FrameDrawer *pFrameDrawer,
 		 MapDrawer *pMapDrawer, Tracking *pTracking,
 		 const string &strSettingPath,
-		 const bool bHidePangolinDisplay,
+		 const bool bHideDisplays,
 		 const int vWidth, const int vHeight):
     mpSystem(pSystem), mpFrameDrawer(pFrameDrawer),mpMapDrawer(pMapDrawer),
     mpTracker(pTracking), mbFinishRequested(false), mbFinished(true),
     mbStopped(false), mbStopRequested(false),
     mWidth(vWidth), mHeight(vHeight),
-    mHidePangolinDisplay(bHidePangolinDisplay)
+    mHideDisplays(bHideDisplays)
   {
     cv::FileStorage fSettings(strSettingPath, cv::FileStorage::READ);
 
@@ -77,7 +77,7 @@ void Viewer::Run()
 
     pangolin::CreateWindowAndBind("ORB-SLAM2: Map Viewer",mWidth,mHeight);
 
-    if (mHidePangolinDisplay) {
+    if (mHideDisplays) {
       // Hide the window using Pangolin's window interface
       
       // Get the current active Pangolin window interface
@@ -98,7 +98,7 @@ void Viewer::Run()
     glEnable (GL_BLEND);
     glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    if (!mHidePangolinDisplay) {
+    if (!mHideDisplays) {
       pangolin::CreatePanel("menu").SetBounds(0.0,1.0,0.0,pangolin::Attach::Pix(175));
     }
     
@@ -120,7 +120,7 @@ void Viewer::Run()
     pangolin::View& d_cam = pangolin::CreateDisplay()  
       .SetHandler(new pangolin::Handler3D(s_cam));
     
-    if (mHidePangolinDisplay) {
+    if (mHideDisplays) {
       d_cam.SetBounds(0.0, 1.0, 0.0, 1.0, -(float)mWidth/(float)mHeight);
     }
     else {
@@ -131,7 +131,7 @@ void Viewer::Run()
     pangolin::OpenGlMatrix Twc;
     Twc.SetIdentity();
 
-   if (!mHidePangolinDisplay) {
+   if (!mHideDisplays) {
      cv::namedWindow("ORB-SLAM2: Current Frame");
    }
 
@@ -178,14 +178,13 @@ void Viewer::Run()
         if(menuShowPoints)
             mpMapDrawer->DrawMapPoints();
 
-	// if (mHidePangolinDisplay) {
+	// if (mHideDisplays) {
 	if (true) {
 	  cv::Mat img(mHeight, mWidth, CV_8UC3);
-
+		
 	  glPixelStorei(GL_PACK_ALIGNMENT, 1);
 	  glReadBuffer(GL_BACK);	  
 	  glReadPixels(0,0,mWidth,mHeight,GL_RGB,GL_UNSIGNED_BYTE,img.data);
-	  cv::flip(img, img, 0); // Flip vertically for Pygame
 
 	  {
 	    unique_lock<mutex> lock(mMutexFrame);
@@ -196,7 +195,7 @@ void Viewer::Run()
         pangolin::FinishFrame();
 
         cv::Mat im = mpFrameDrawer->DrawFrame();
-	if (!mHidePangolinDisplay) {
+	if (!mHideDisplays) {
 	  cv::imshow("ORB-SLAM2: Current Frame",im);
 	}
 	
