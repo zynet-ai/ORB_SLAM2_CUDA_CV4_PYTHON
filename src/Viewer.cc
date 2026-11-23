@@ -183,6 +183,7 @@ void Viewer::Run()
 	  cv::Mat img(mHeight, mWidth, CV_8UC3);
 
 	  glPixelStorei(GL_PACK_ALIGNMENT, 1);
+	  glReadBuffer(GL_BACK);	  
 	  glReadPixels(0,0,mWidth,mHeight,GL_RGB,GL_UNSIGNED_BYTE,img.data);
 	  cv::flip(img, img, 0); // Flip vertically for Pygame
 
@@ -198,6 +199,7 @@ void Viewer::Run()
 	if (!mHidePangolinDisplay) {
 	  cv::imshow("ORB-SLAM2: Current Frame",im);
 	}
+	
         cv::waitKey(mT);
 
         if(menuReset)
@@ -293,13 +295,11 @@ void Viewer::Release()
 
 cv::Mat Viewer::GetRenderedFrame()
 {
-  if (mHidePangolinDisplay) {
-    unique_lock<mutex> lock(mMutexFrame);
-    return(mRenderedFrame.clone());
+  unique_lock<mutex> lock(mMutexFrame);
+  if (mRenderedFrame.empty()) {
+    return cv::Mat::zeros(mHeight, mWidth, CV_8UC3);
   }
-  else {
-    return cv::Mat (mHeight, mWidth, CV_8UC3);
-  }
+  return mRenderedFrame.clone();
 }
 
 }
