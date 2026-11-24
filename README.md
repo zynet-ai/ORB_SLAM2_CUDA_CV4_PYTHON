@@ -65,7 +65,7 @@ We use 3.4.1
 # Building ORB_SLAM2_CUDA_CV4_PYTHON
 Clone this repo and execute the build script:
 ```
-git clone https://github.com/Zynet-ai/ORB_SLAM2_CUDA_CV4_PYTHON
+git clone https://github.com/zynet-ai/ORB_SLAM2_CUDA_CV4_PYTHON
 cd ORB_SLAM2_CUDA_CV4_PYTHON
 chmod +x build.sh
 ./build.sh
