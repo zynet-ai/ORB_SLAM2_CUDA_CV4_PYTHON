@@ -44,7 +44,7 @@ public:
     Viewer(System* pSystem, FrameDrawer* pFrameDrawer, MapDrawer* pMapDrawer,
 	   Tracking *pTracking,
 	   const string &strSettingPath,
-	   const bool bHidePangolinDisplay,
+	   const bool bHideDisplays,
 	   const int vWidth, const int vHeight);
 
     // Delegating legacy constructor
@@ -98,7 +98,7 @@ private:
     int mWidth;
     int mHeight;
 
-    bool mHidePangolinDisplay;
+    bool mHideDisplays;
 
     cv::Mat mRenderedFrame;
     std::mutex mMutexFrame;

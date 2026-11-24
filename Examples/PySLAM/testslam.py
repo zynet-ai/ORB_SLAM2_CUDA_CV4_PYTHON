@@ -30,10 +30,20 @@ pygame.display.set_caption("Zynet Bot SLAM Tracking")
 vocab_path    = "../../Vocabulary/ORBvoc.bin"
 settings_path = "ZynetBot.yaml"
 
-usePangolin         = True
-hidePangolinDisplay = True
-slam = pyslam.pyslam(vocab_path, settings_path, 0, usePangolin,
-                     hidePangolinDisplay, width, height)
+# The OrbSlam2 Viewer generates the map image
+# Set this to false if you want to use simpleMap to generate the map image
+enableOrbSlam2Viewer = True
+
+# Enabling the OrbSlam2Viewer also displays both the overlayed input image
+# and the generated map image in separate pop-up windows. Disabling the
+# OrbSlam2 displays allows using the viewer to generate the map image,
+# but prevents having the OrbSlam2 Viewer from displaying the images since
+# we handle the displays using PyGame
+
+disableOrbSlam2Displays = True
+
+slam = pyslam.pyslam(vocab_path, settings_path, 0, enableOrbSlam2Viewer,
+                     disableOrbSlam2Displays, width, height)
 
 clock   = pygame.time.Clock()
 running = True
@@ -78,20 +88,15 @@ try:
         laststamp = now
             
         if tracked_img is not None and tracked_img.size > 0:
-            frame_rotated = cv2.rotate(tracked_img,
-                                       cv2.ROTATE_90_COUNTERCLOCKWISE)
+            surface = pygame.surfarray.make_surface(tracked_img.swapaxes(0, 1))
         else:
             # Fallback to standard frame if SLAM tracking fails or drops out
-            frame_rotated = cv2.rotate(frame,
-                                       cv2.ROTATE_90_COUNTERCLOCKWISE)
-            
-        frame_flipped = cv2.flip(frame_rotated, 0)
-        surface = pygame.surfarray.make_surface(frame_flipped)
+            surface = pygame.surfarray.make_surface(frame.swapaxes(0, 1))
+
         screen.blit(surface, rect_left)
-        pygame.display.flip()
 
         # Create the projected scatter plot of the points
-        if usePangolin:
+        if enableOrbSlam2Viewer:
             map_img = slam.get_rendered_map()
         else:
             # Get the current pose from the most recent frame
@@ -107,11 +112,15 @@ try:
             map_img = simpleMap.drawmap(height,width,pose,map_points,kf_points)
 
         # Display the map image on the right side of the split screen
-        frame_rotated = cv2.rotate(map_img,
-                                   cv2.ROTATE_90_COUNTERCLOCKWISE)
-        frame_flipped = cv2.flip(frame_rotated, 0)
-        surface = pygame.surfarray.make_surface(frame_flipped)
+
+        # Need to: flip about X, rotate 90 CCW, then flip about X again.
+        # Instead:
+        # map.img[::-1] flips the vertical axis first;
+        # .swapaxes(0, 1) then transposes (H, W) -> (W, H)
+        
+        surface = pygame.surfarray.make_surface(map_img[::-1].swapaxes(0, 1))
         screen.blit(surface, rect_right)
+        
         pygame.display.flip()
 
         for event in pygame.event.get():

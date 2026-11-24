@@ -64,7 +64,7 @@ public:
     // Initialize the SLAM system. It launches the Local Mapping, Loop Closing and Viewer threads.
     System(const string &strVocFile, const string &strSettingsFile,
 	   const eSensor sensor, const bool bUseViewer,
-	   const bool bHidePangolinDisplay,
+	   const bool bHideDisplays,
 	   const int vWidth, const int vHeight);
 
     // Delegating legacy constructor

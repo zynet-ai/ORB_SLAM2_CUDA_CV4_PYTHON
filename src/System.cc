@@ -38,7 +38,7 @@ bool bEnableViewer;
   
   System::System(const string &strVocFile, const string &strSettingsFile,
 		 const eSensor sensor, const bool bUseViewer,
-		 const bool bHidePangolinDisplay,
+		 const bool bHideDisplays,
 		 const int vWidth, const int vHeight):
     mSensor(sensor), mpViewer(static_cast<Viewer*>(NULL)), mbReset(false), 
     mbActivateLocalizationMode(false),mbDeactivateLocalizationMode(false)
@@ -116,7 +116,7 @@ bool bEnableViewer;
     if(bUseViewer)
     {    
       mpViewer = new Viewer(this, mpFrameDrawer,mpMapDrawer,mpTracker,
-			    strSettingsFile,bHidePangolinDisplay,vWidth,vHeight);
+			    strSettingsFile,bHideDisplays,vWidth,vHeight);
       mptViewer = new thread(&Viewer::Run, mpViewer);
       mpTracker->SetViewer(mpViewer);
     }

@@ -34,13 +34,13 @@ def drawmap(height, width, pose, mappts_3d, kfpts_3d):
     z_coords = proj_points[:, 2]
 
     xx_coords = scale * x_coords + offset_x
-    zz_coords = height - (scale * z_coords + offset_z)
+    zz_coords = scale * z_coords + offset_z
     
     coords = np.column_stack((xx_coords.ravel(), zz_coords.ravel()))
     
     for x, z in coords:
         # Let opencv handle any drawing out-of-bounds
-        if (z > offset_z):
+        if (z < offset_z):
             cv2.circle(img, (int(x), int(z)), 1, (192, 0, 0), -1)
         else:
             cv2.circle(img, (int(x), int(z)), 1, (255, 0, 0), -1)
@@ -54,7 +54,7 @@ def drawmap(height, width, pose, mappts_3d, kfpts_3d):
     z_coords = proj_points[:, 2]
 
     xx_coords = scale * x_coords + offset_x
-    zz_coords = height - (scale * z_coords + offset_z)
+    zz_coords = scale * z_coords + offset_z
     
     coords = np.column_stack((xx_coords.ravel(), zz_coords.ravel()))
     

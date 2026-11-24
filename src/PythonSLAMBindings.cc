@@ -26,12 +26,12 @@ public:
   
   // Static numpy module declaration accessible within pyslam objects
   pyslam(const std::string &vocFile, const std::string &settingsFile,
-	 int sensorType, bool bUseViewer, bool bHidePangolinDisplay,
+	 int sensorType, bool bUseViewer, bool bHideDisplays,
 	 int vWidth, int vHeight) :
     np(py::module_::import("numpy")) {
     slam = new ORB_SLAM2::System(vocFile, settingsFile,
 				 (ORB_SLAM2::System::eSensor)sensorType,
-				 bUseViewer, bHidePangolinDisplay, vWidth, vHeight);
+				 bUseViewer, bHideDisplays, vWidth, vHeight);
   }
   ~pyslam() {
     if (slam) {
